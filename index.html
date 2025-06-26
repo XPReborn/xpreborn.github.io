@@ -34,6 +34,7 @@
             padding: 20px;
             text-align: center;
             border-bottom: 2px solid #1e5a96;
+            position: relative;
         }
 
         .header h1 {
@@ -48,9 +49,59 @@
             opacity: 0.9;
         }
 
+        .visit-counter {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-tabs {
+            background: #e6f2ff;
+            border-bottom: 1px solid #b3d9ff;
+            display: flex;
+            padding: 0 20px;
+        }
+
+        .nav-tab {
+            background: #cce7ff;
+            border: 1px solid #b3d9ff;
+            border-bottom: none;
+            padding: 12px 24px;
+            margin-right: 2px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #1e5a96;
+            transition: all 0.2s ease;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .nav-tab:hover {
+            background: #b3d9ff;
+        }
+
+        .nav-tab.active {
+            background: #f8f8f8;
+            border-bottom: 1px solid #f8f8f8;
+            margin-bottom: -1px;
+        }
+
         .content {
             padding: 30px;
             background: #f8f8f8;
+            min-height: 600px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .section {
@@ -68,9 +119,9 @@
             border-bottom: 1px solid #b3d9ff;
         }
 
-        .section-header h2 {
+        .section-header h3 {
             color: #1e5a96;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: bold;
         }
 
@@ -96,7 +147,7 @@
             box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
         }
 
-        .program h3 {
+        .program h4 {
             color: #1e5a96;
             font-size: 1.1rem;
             margin-bottom: 8px;
@@ -128,6 +179,78 @@
             transform: translateY(-1px);
         }
 
+        .about-content {
+            padding: 20px;
+            line-height: 1.6;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d0d0d0;
+        }
+
+        .about-content h3 {
+            color: #1e5a96;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .about-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .about-content ul {
+            color: #666;
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .team-member {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .team-member:hover {
+            background: #f0f8ff;
+            border-color: #4a90e2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+
+        .team-member img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #4a90e2;
+            object-fit: cover;
+        }
+
+        .team-member h4 {
+            color: #1e5a96;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .team-member .role {
+            color: #4a90e2;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .team-member p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            text-align: left;
+        }
+
         .footer {
             background: linear-gradient(to bottom, #4a90e2 0%, #2171b5 100%);
             color: white;
@@ -149,6 +272,16 @@
                 padding: 20px;
             }
 
+            .nav-tabs {
+                padding: 0 10px;
+                flex-wrap: wrap;
+            }
+
+            .nav-tab {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
             .programs-grid {
                 grid-template-columns: 1fr;
                 gap: 15px;
@@ -157,6 +290,12 @@
 
             .program {
                 padding: 12px;
+            }
+
+            .visit-counter {
+                position: static;
+                margin-top: 10px;
+                display: inline-block;
             }
         }
 
@@ -168,156 +307,249 @@
             .header p {
                 font-size: 1rem;
             }
-
-            .section-header h2 {
-                font-size: 1.2rem;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <div class="visit-counter">
+                👁️ Visits: <span id="visitCount">0</span>
+            </div>
             <h1>Windows XP Essentials</h1>
             <p>Your complete guide to essential FREE software for the classic Windows XP experience. Part of the Reborn: XP Project</p>
         </div>
 
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showTab('apps')">📱 Apps</div>
+            <div class="nav-tab" onclick="showTab('games')">🎮 Games</div>
+            <div class="nav-tab" onclick="showTab('about')">ℹ️ About</div>
+            <div class="nav-tab" onclick="showTab('team')">👥 Our Team</div>
+        </div>
+
         <div class="content">
-            <!-- Browsers Section -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>🌐 Web Browsers</h2>
+            <!-- Apps Tab Content -->
+            <div id="apps" class="tab-content active">
+                <!-- Browsers Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3>🌐 Web Browsers</h3>
+                    </div>
+                    <div class="programs-grid">
+                        <div class="program">
+                            <h4>NewMoon-SSE 27.9.4.1</h4>
+                            <p>Modern Firefox-based browser optimized for Windows XP with SSE support and updated security features.</p>
+                            <a href="https://www.mediafire.com/file/eae0hfsdsm9kayi/New-Moon-SSE-27-9-4-1.zip/file">Download</a>
+                        </div>
+                        <div class="program">
+                            <h4>MyPal 68.13.2</h4>
+                            <p>Firefox-based browser specifically maintained for Windows XP with modern web compatibility and security updates.</p>
+                            <a href="https://www.mediafire.com/file/e4jorl75uprng8u/mypal-68.13.2.en-US.win32.zip/file">Download</a>
+                        </div>
+                        <div class="program">
+                            <h4>MyPal 28.15</h4>
+                            <p>Lightweight Firefox-based browser for older XP systems with lower resource requirements and good compatibility.</p>
+                            <a href="https://www.mediafire.com/file/f4upuics280a1r8/mypal-28.15.0.win32.installer.exe/file">Download</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="programs-grid">
-                    <div class="program">
-                        <h3>NewMoon-SSE 27.9.4.1</h3>
-                        <p>Modern Firefox-based browser optimized for Windows XP with SSE support and updated security features.</p>
-                        <a href="https://www.mediafire.com/file/eae0hfsdsm9kayi/New-Moon-SSE-27-9-4-1.zip/file">Download</a>
+
+                <!-- Browser Extensions Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3>🔌 Browser Extensions</h3>
                     </div>
-                    <div class="program">
-                        <h3>MyPal 68.13.2</h3>
-                        <p>Firefox-based browser specifically maintained for Windows XP with modern web compatibility and security updates.</p>
-                        <a href="https://www.mediafire.com/file/e4jorl75uprng8u/mypal-68.13.2.en-US.win32.zip/file">Download</a>
+                    <div class="programs-grid">
+                        <div class="program">
+                            <h4>uBlock Origin Legacy</h4>
+                            <p>Efficient ad blocker and content filter for older Firefox versions, blocks ads and trackers effectively.</p>
+                            <a href="https://www.mediafire.com/file/o51xgbsbwcdmls0/uBlock0.firefox-legacy.xpi/file">Download</a>
+                        </div>
+                        <div class="program">
+                            <h4>NoScript 5.1.8.4</h4>
+                            <p>Security extension that blocks JavaScript, Flash, and other plugins to protect against malicious scripts.</p>
+                            <a href="https://www.mediafire.com/file/o835m5szbwr62pn/nosc5184.xpi/file">Download</a>
+                        </div>
                     </div>
-                    <div class="program">
-                        <h3>MyPal 28.15</h3>
-                        <p>Lightweight Firefox-based browser for older XP systems with lower resource requirements and good compatibility.</p>
-                        <a href="https://www.mediafire.com/file/f4upuics280a1r8/mypal-28.15.0.win32.installer.exe/file">Download</a>
+                </div>
+
+                <!-- Media Players Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3>🎵 Media Players</h3>
+                    </div>
+                    <div class="programs-grid">
+                        <div class="program">
+                            <h4>Winamp 5.06</h4>
+                            <p>The legendary audio player that really whips the llama's ass. Customizable skins and powerful audio processing.</p>
+                            <a href="https://www.mediafire.com/file/vk8wihldt2m6kwi/winamp506_full.exe/file">Download</a>
+                        </div>
+                        <div class="program">
+                            <h4>foobar2000 0.9</h4>
+                            <p>Lightweight and highly customizable audio player with advanced tagging capabilities and modular design.</p>
+                            <a href="https://www.mediafire.com/file/sguii4l0hrj5ylh/foobar09.exe/file">Download</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphics & Image Viewers Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3>🖼️ Graphics & Image Viewers</h3>
+                    </div>
+                    <div class="programs-grid">
+                        <div class="program">
+                            <h4>IrfanView 4.5.3</h4>
+                            <p>Fast and compact image viewer with basic editing capabilities and support for numerous image formats.</p>
+                            <a href="https://www.mediafire.com/file/88888b9busu302l/iview453_setup.exe/file">Download</a>
+                        </div>
+                        <div class="program">
+                            <h4>Greenshot 1.2.8.12</h4>
+                            <p>Lightweight screenshot tool with annotation features and multiple export options for capturing screen content.</p>
+                            <a href="https://www.mediafire.com/file/kiyt7fc9e1lentm/Greenshot-1.2.8.12.exe/file">Download</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Communication Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3>💬 Communication</h3>
+                    </div>
+                    <div class="programs-grid">
+                        <div class="program">
+                            <h4>HexChat 2.9.4</h4>
+                            <p>Free IRC client based on XChat with a clean interface and extensive customization options.</p>
+                            <a href="https://www.mediafire.com/file/kzah363otcs4utn/HexChat_2.9.4_x86.exe/file">Download</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Tools Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3>🔧 System Tools</h3>
+                    </div>
+                    <div class="programs-grid">
+                        <div class="program">
+                            <h4>7-Zip 19.00</h4>
+                            <p>Free file archiver with high compression ratio supporting multiple archive formats including ZIP, RAR, and 7z.</p>
+                            <a href="https://www.mediafire.com/file/l4162k2dsss519l/7z1900.exe/file">Download</a>
+                        </div>
+                        <div class="program">
+                            <h4>WinSCP 5.15.9</h4>
+                            <p>Free SFTP, FTP, WebDAV, Amazon S3 and SCP client with graphical interface for secure file transfers.</p>
+                            <a href="https://www.mediafire.com/file/ml0dt3lu5vx6bme/WinSCP-5.15.9-Setup.exe/file">Download</a>
+                        </div>
+                        <div class="program">
+                            <h4>Rainmeter 3.3</h4>
+                            <p>Desktop customization tool that displays customizable skins with system information, weather, and more.</p>
+                            <a href="https://www.mediafire.com/file/5h4l7644c8ygfoo/Rainmeter_v3.3.exe/file">Download</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Themes & Customization Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3>🎨 Themes & Customization</h3>
+                    </div>
+                    <div class="programs-grid">
+                        <div class="program">
+                            <h4>Zune Desktop Theme</h4>
+                            <p>Modern desktop theme inspired by Microsoft Zune interface with sleek dark colors and clean design.</p>
+                            <a href="https://www.mediafire.com/file/p0gddlfmbnfm7m5/ZuneDesktopTheme.msi/file">Download</a>
+                        </div>
+                        <div class="program">
+                            <h4>Royale Noir Theme</h4>
+                            <p>Elegant dark theme for Windows XP with sophisticated black and blue color scheme and refined appearance.</p>
+                            <a href="https://www.mediafire.com/file/tu6lt5sonrfbg1k/royale_noir.zip/file">Download</a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Browser Extensions Section -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>🔌 Browser Extensions</h2>
-                </div>
+            <!-- Games Tab Content -->
+            <div id="games" class="tab-content">
                 <div class="programs-grid">
                     <div class="program">
-                        <h3>uBlock Origin Legacy</h3>
-                        <p>Efficient ad blocker and content filter for older Firefox versions, blocks ads and trackers effectively.</p>
-                        <a href="https://www.mediafire.com/file/o51xgbsbwcdmls0/uBlock0.firefox-legacy.xpi/file">Download</a>
+                        <h4>OpenArena</h4>
+                        <p>Free and open-source first-person shooter based on the Quake III Arena engine. Features fast-paced multiplayer action with classic arena-style gameplay.</p>
+                        <a href="https://www.moddb.com/downloads/mirror/12708/131/f3e244764b148797c135b7f7bcb31d34">Download</a>
                     </div>
                     <div class="program">
-                        <h3>NoScript 5.1.8.4</h3>
-                        <p>Security extension that blocks JavaScript, Flash, and other plugins to protect against malicious scripts.</p>
-                        <a href="https://www.mediafire.com/file/o835m5szbwr62pn/nosc5184.xpi/file">Download</a>
+                        <h4>SuperTuxKart</h4>
+                        <p>Free 3D kart racing game featuring Tux the Linux penguin and friends. Includes various tracks, game modes, and power-ups for exciting racing action.</p>
+                        <a href="https://github.com/supertuxkart/stk-code/releases/download/1.4/SuperTuxKart-1.4-installer-i686.exe">Download</a>
                     </div>
+                    <div class="program">
+                        <h4>Cave Story</h4>
+                        <p>Classic indie Metroidvania-style platformer with engaging story and retro pixel art. Explore underground caverns and uncover the mystery of the floating island.</p>
+                        <a href="https://www.cavestory.org/downloads/cavestoryen.zip">Download</a>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 20px; color: #666; font-style: italic;">
+                    More games soon...
                 </div>
             </div>
 
-            <!-- Media Players Section -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>🎵 Media Players</h2>
-                </div>
-                <div class="programs-grid">
-                    <div class="program">
-                        <h3>Winamp 5.06</h3>
-                        <p>The legendary audio player that really whips the llama's ass. Customizable skins and powerful audio processing.</p>
-                        <a href="https://www.mediafire.com/file/vk8wihldt2m6kwi/winamp506_full.exe/file">Download</a>
-                    </div>
-                    <div class="program">
-                        <h3>foobar2000 0.9</h3>
-                        <p>Lightweight and highly customizable audio player with advanced tagging capabilities and modular design.</p>
-                        <a href="https://www.mediafire.com/file/sguii4l0hrj5ylh/foobar09.exe/file">Download</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Graphics & Image Viewers Section -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>🖼️ Graphics & Image Viewers</h2>
-                </div>
-                <div class="programs-grid">
-                    <div class="program">
-                        <h3>IrfanView 4.5.3</h3>
-                        <p>Fast and compact image viewer with basic editing capabilities and support for numerous image formats.</p>
-                        <a href="https://www.mediafire.com/file/88888b9busu302l/iview453_setup.exe/file">Download</a>
-                    </div>
-                    <div class="program">
-                        <h3>Greenshot 1.2.8.12</h3>
-                        <p>Lightweight screenshot tool with annotation features and multiple export options for capturing screen content.</p>
-                        <a href="https://www.mediafire.com/file/kiyt7fc9e1lentm/Greenshot-1.2.8.12.exe/file">Download</a>
-                    </div>
+            <!-- About Tab Content -->
+            <div id="about" class="tab-content">
+                <div class="about-content">
+                    <h3>What is XP: Reborn?</h3>
+                    <p>
+                        XP: Reborn is a community-driven project dedicated to preserving and extending the life of Windows XP. 
+                        Our mission is to provide modern software compatibility, security updates, and essential tools for users 
+                        who want to continue using this beloved operating system.
+                    </p>
+                    <h3>Our Goals</h3>
+                    <ul>
+                        <li>Curate compatible software for Windows XP systems</li>
+                        <li>Provide security-focused browser alternatives</li>
+                        <li>Maintain a collection of essential productivity tools</li>
+                        <li>Support the retro computing community</li>
+                    </ul>
+                    <p style="font-style: italic;">
+                        Join us in keeping the classic Windows XP experience alive for enthusiasts, retro gamers, and legacy system users.
+                    </p>
                 </div>
             </div>
 
-            <!-- Communication Section -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>💬 Communication</h2>
-                </div>
-                <div class="programs-grid">
-                    <div class="program">
-                        <h3>HexChat 2.9.4</h3>
-                        <p>Free IRC client based on XChat with a clean interface and extensive customization options.</p>
-                        <a href="https://www.mediafire.com/file/kzah363otcs4utn/HexChat_2.9.4_x86.exe/file">Download</a>
+            <!-- Our Team Tab Content -->
+            <div id="team" class="tab-content">
+                <div class="about-content">
+                    <h3>Meet the XP: Reborn Team</h3>
+                    <p>
+                        Our dedicated team of volunteers works tirelessly to keep Windows XP alive and thriving. 
+                        We're passionate about preserving computing history and supporting the retro computing community.
+                    </p>
+                    
+                    <div class="programs-grid" style="margin-top: 30px;">
+                        <div class="team-member">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/profdiscord-i2uYnMNZDvHm3GJgyfCRn6TBchHhXU.png" alt="Kubusiak Profile">
+                            <h4>Kubusiak</h4>
+                            <div class="role">Project Creator & Lead Developer</div>
+                            <p>The creator of the project. A devoted fan of Windows XP, passionately developing the XP: Reborn project — a modern revival of a legendary system. Tech enthusiast, always hunting for that perfect blend of nostalgia and performance.</p>
+                        </div>
+                        
+                        <!-- Placeholder for more team members -->
+                        <div class="team-member" style="opacity: 0.6; border: 2px dashed #ccc;">
+                            <div style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #999;">👤</div>
+                            <h4 style="color: #999;">More Team Members</h4>
+                            <div class="role" style="color: #999;">Coming Soon</div>
+                            <p style="color: #999;">We're growing our team! More member profiles will be added as the XP: Reborn project expands.</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- System Tools Section -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>🔧 System Tools</h2>
-                </div>
-                <div class="programs-grid">
-                    <div class="program">
-                        <h3>7-Zip 19.00</h3>
-                        <p>Free file archiver with high compression ratio supporting multiple archive formats including ZIP, RAR, and 7z.</p>
-                        <a href="https://www.mediafire.com/file/l4162k2dsss519l/7z1900.exe/file">Download</a>
-                    </div>
-                    <div class="program">
-                        <h3>WinSCP 5.15.9</h3>
-                        <p>Free SFTP, FTP, WebDAV, Amazon S3 and SCP client with graphical interface for secure file transfers.</p>
-                        <a href="https://www.mediafire.com/file/ml0dt3lu5vx6bme/WinSCP-5.15.9-Setup.exe/file">Download</a>
-                    </div>
-                    <div class="program">
-                        <h3>Rainmeter 3.3</h3>
-                        <p>Desktop customization tool that displays customizable skins with system information, weather, and more.</p>
-                        <a href="https://www.mediafire.com/file/5h4l7644c8ygfoo/Rainmeter_v3.3.exe/file">Download</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Themes & Customization Section -->
-            <div class="section">
-                <div class="section-header">
-                    <h2>🎨 Themes & Customization</h2>
-                </div>
-                <div class="programs-grid">
-                    <div class="program">
-                        <h3>Zune Desktop Theme</h3>
-                        <p>Modern desktop theme inspired by Microsoft Zune interface with sleek dark colors and clean design.</p>
-                        <a href="https://www.mediafire.com/file/p0gddlfmbnfm7m5/ZuneDesktopTheme.msi/file">Download</a>
-                    </div>
-                    <div class="program">
-                        <h3>Royale Noir Theme</h3>
-                        <p>Elegant dark theme for Windows XP with sophisticated black and blue color scheme and refined appearance.</p>
-                        <a href="https://www.mediafire.com/file/tu6lt5sonrfbg1k/royale_noir.zip/file">Download</a>
-                    </div>
+                    
+                    <h3 style="margin-top: 40px;">Join Our Team</h3>
+                    <p>
+                        Interested in contributing to the XP: Reborn project? We're always looking for passionate volunteers 
+                        who want to help preserve Windows XP for future generations. Whether you're a developer, designer, 
+                        writer, or just an XP enthusiast, there's a place for you on our team.
+                    </p>
+                    <p style="font-style: italic; color: #4a90e2; margin-top: 15px;">
+                        Contact us to learn more about volunteer opportunities and how you can make a difference!
+                    </p>
                 </div>
             </div>
         </div>
@@ -326,5 +558,42 @@
             <p>&copy; 2025 Windows XP Essentials | Bringing back the classic computing experience</p>
         </div>
     </div>
+
+    <script>
+        // Site visits counter using localStorage
+        function updateVisitCounter() {
+            let visits = localStorage.getItem('xpEssentialsVisits');
+            if (visits === null) {
+                visits = 0;
+            }
+            visits = parseInt(visits) + 1;
+            localStorage.setItem('xpEssentialsVisits', visits);
+            document.getElementById('visitCount').textContent = visits;
+        }
+
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Initialize counter on page load
+        document.addEventListener('DOMContentLoaded', updateVisitCounter);
+    </script>
 </body>
 </html>
